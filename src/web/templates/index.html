@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Classification System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♻️ Waste Classification System</h1>
+            <p class="subtitle">Upload an image to classify waste type using AI</p>
+        </header>
+
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="upload-section">
+                <form action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                    <div class="file-input-wrapper">
+                        <input type="file" name="file" id="fileInput" accept="image/*" required>
+                        <label for="fileInput" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span id="fileName">Choose an image file</span>
+                        </label>
+                    </div>
+                    
+                    <div id="preview-container" style="display: none;">
+                        <img id="imagePreview" src="" alt="Preview">
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submitBtn" disabled>
+                        Classify Waste
+                    </button>
+                </form>
+            </div>
+
+            <div class="info-section">
+                <h2>Supported Waste Categories</h2>
+                <div class="categories">
+                    <div class="category-card">
+                        <div class="category-icon">📦</div>
+                        <h3>Cardboard</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🗑️</div>
+                        <h3>General Waste</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🍾</div>
+                        <h3>Glass</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🔩</div>
+                        <h3>Metals</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">📄</div>
+                        <h3>Paper</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🥤</div>
+                        <h3>Plastic</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by EfficientNet Deep Learning Model</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</body>
+</html>

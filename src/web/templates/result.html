@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Results - Waste Classification System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♻️ Classification Results</h1>
+            <p class="subtitle">AI-powered waste classification</p>
+        </header>
+
+        <main>
+            <div class="results-section">
+                <div class="result-header">
+                    <h2>Prediction for: {{ filename }}</h2>
+                </div>
+
+                <div class="top-prediction">
+                    <div class="prediction-badge {{ results.top_class|lower }}">
+                        <span class="badge-label">Classification</span>
+                        <span class="badge-value">{{ results.top_class }}</span>
+                    </div>
+                    <div class="confidence-score">
+                        <span class="score-label">Confidence</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ results.top_confidence * 100 }}%"></div>
+                        </div>
+                        <span class="score-value">{{ "%.2f"|format(results.top_confidence * 100) }}%</span>
+                    </div>
+                </div>
+
+                <div class="all-predictions">
+                    <h3>All Predictions</h3>
+                    <div class="predictions-list">
+                        {% for pred in results.predictions %}
+                        <div class="prediction-item">
+                            <div class="pred-name">
+                                <span class="rank">#{{ loop.index }}</span>
+                                {{ pred.class }}
+                            </div>
+                            <div class="pred-confidence">
+                                <div class="mini-progress">
+                                    <div class="mini-progress-fill" style="width: {{ pred.confidence * 100 }}%"></div>
+                                </div>
+                                <span class="pred-percentage">{{ pred.percentage }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="disposal-info">
+                    <h3>💡 Disposal Information</h3>
+                    <div class="info-box">
+                        {% if results.top_class == 'Cardboard' %}
+                            <p>♻️ <strong>Cardboard</strong> is recyclable! Flatten boxes and remove any plastic tape before recycling.</p>
+                        {% elif results.top_class == 'Paper' %}
+                            <p>♻️ <strong>Paper</strong> is recyclable! Keep it clean and dry for best recycling results.</p>
+                        {% elif results.top_class == 'Plastic' %}
+                            <p>♻️ <strong>Plastic</strong> may be recyclable depending on type. Check your local recycling guidelines.</p>
+                        {% elif results.top_class == 'Glass' %}
+                            <p>♻️ <strong>Glass</strong> is infinitely recyclable! Rinse containers before recycling.</p>
+                        {% elif results.top_class == 'Metals' %}
+                            <p>♻️ <strong>Metals</strong> are highly recyclable! Aluminum and steel can be recycled indefinitely.</p>
+                        {% elif results.top_class == 'General-Waste' %}
+                            <p>🗑️ <strong>General Waste</strong> typically goes to landfill. Consider if any parts can be recycled separately.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a href="{{ url_for('index') }}" class="btn-primary">Classify Another Image</a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by EfficientNet Deep Learning Model</p>
+        </footer>
+    </div>
+</body>
+</html>
