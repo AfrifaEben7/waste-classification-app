@@ -18,3 +18,5 @@ dependencies:
       - Flask>=2.3.0
       - Werkzeug>=2.3.0
       - opencv-python>=4.8.0
+      - gradio
+      - onnyxruntime
