@@ -430,8 +430,6 @@ python -m pytest tests/
 
 - [ ] Add more waste categories (Electronics, Organic, etc.)
 - [ ] Implement multi-label classification (items with mixed materials)
-- [ ] Deploy to cloud platforms (Azure, AWS, GCP)
-- [ ] Mobile app integration (iOS/Android)
 - [ ] Real-time video classification
 - [ ] Data augmentation techniques for better accuracy
 - [ ] Model explainability (Grad-CAM visualizations)
